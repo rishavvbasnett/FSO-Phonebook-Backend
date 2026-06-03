@@ -83,6 +83,7 @@ app.post("/api/persons/", (request, response) => {
   }
 });
 
-app.listen(3001);
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log("Server has started on PORT: ", PORT));
 
 const generateId = () => Math.floor(Math.random() * 100000);
