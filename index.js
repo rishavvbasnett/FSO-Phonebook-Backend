@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { json, request, response } from "express";
+import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import People from "./models/people.js";
@@ -27,24 +27,6 @@ app.get("/api/persons", (request, response) => {
       });
     }
   });
-});
-
-app.get("/info", (request, response) => {
-  response.send(`
-    <p>Phonebook has info for ${numbersList.length} entries </p>
-    <p>${new Date(Date.now()).toString()}</p>
-    `);
-});
-
-app.get("/api/persons/:id", (request, response) => {
-  const id = request.params.id;
-  const requestedPerson = numbersList.find((person) => person.id === id);
-
-  if (requestedPerson) {
-    response.json(requestedPerson);
-  } else {
-    response.status(404).json({ error: "Person not found!" });
-  }
 });
 
 app.delete("/api/persons/:id", (request, response, next) => {
@@ -76,8 +58,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log("Server has started on PORT: ", PORT));
-
-const generateId = () => Math.floor(Math.random() * 100000);
 
 const makeFirstPerson = () => {
   const number = new People({
